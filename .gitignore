@@ -1,0 +1,9 @@
+/.vs
+/Common/obj
+/Common/bin
+/ConsoleReceiver/obj
+/ConsoleReceiver/bin
+/Publisher/obj
+/Publisher/bin
+/Receiver/obj
+/Receiver/bin

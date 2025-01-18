@@ -1,0 +1,69 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using Common.Model
+@using Common.Service
+@using Azure.Messaging.ServiceBus;
+@inject IQueueService queueService
+@inject ServiceBusProcessorService ProcessorService
+@inject ServiceBusReceiverService ReceiverService
+<PageTitle>Home - Reciver</PageTitle>
+
+<h1>Consumer</h1>
+
+<button @onclick="StartReceiving" class="btn btn-primary">Start Receiving</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Products)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price</td>
+                <td>@item.Category</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<ul>
+    @foreach (var message in Messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+@code {
+    private List<Product> Products { get; set; } = new();
+
+    /// <summary>
+    /// This is pull model
+    /// </summary>
+    /// <returns></returns>
+    private async Task StartReceiving()
+    {
+        try
+        {
+            var product = await ReceiverService.ReceiveMessageAsync();
+            if (product is not null)
+            {
+                Products.Add(product);
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            //ReceivedMessage = $"Error: {ex.Message}";
+        }
+    }
+    private List<string> Messages = new();
+
+}
