@@ -6,6 +6,11 @@
         "Path": "Publisher\\Publisher.csproj",
         "Action": "Start",
         "DebugTarget": "https"
+      },
+      {
+        "Path": "Receicer.API\\Receicer.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
       }
     ]
   }
